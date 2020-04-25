@@ -6,6 +6,16 @@
       "realization" : "MongoDB",
       "type" : "uuAppObjectStore",
       "schemaMap" : {
+        "item" : {
+          "realization" : "uu.todo01.main.dao.mongo.ItemMongoDao",
+          "maxSoi" : "16000000",
+          "maxNoi" : "500000"
+        },
+        "list" : {
+          "realization" : "uu.todo01.main.dao.mongo.ListMongoDao",
+          "maxSoi" : "16000000",
+          "maxNoi" : "100"
+        },
         "sysAppConfig" : {
           "realization" : "uu.app.workspace.store.dao.SysAppConfigMongoDao",
           "maxSoi" : "16000000",

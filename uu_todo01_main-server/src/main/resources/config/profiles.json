@@ -8,7 +8,7 @@
     }
   },
   "*": {
-    "profileList": ["Authorities", "Executives", "AwidOwner"],
+    "profileList": ["Readers", "Authorities", "Executives", "AwidOwner"],
     "useCaseMap": {
       "init": ["AwidOwner"],
       "defaultUve": ["Public"]
