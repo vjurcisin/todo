@@ -18,6 +18,14 @@
         "consumes" : "*/*",
         "produces" : "application/*"
       },
+      "item/create" : {
+        "realization" : "uu.todo01.main.api.ItemsController::createItem",
+        "httpMethod" : "POST",
+        "type" : "CMD",
+        "primary" : false,
+        "consumes" : "*/*",
+        "produces" : "application/*"
+      },
       "oidc/callback" : {
         "realization" : "uu.app.authentication.oidc.controller.OidcUveController::callback",
         "httpMethod" : "GET",

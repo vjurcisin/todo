@@ -11,7 +11,8 @@
     "profileList": ["Readers", "Authorities", "Executives", "AwidOwner"],
     "useCaseMap": {
       "init": ["AwidOwner"],
-      "defaultUve": ["Public"]
+      "defaultUve": ["Public"],
+      "item/create": ["Authorities", "Executives"]
     }
   }
 }
