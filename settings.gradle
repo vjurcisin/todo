@@ -1,0 +1,3 @@
+rootProject.name = 'uuTodo01_main'
+include 'uu_todo01_main-server'
+include 'uu_todo01_main-hi'

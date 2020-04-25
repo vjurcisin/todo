@@ -1,0 +1,22 @@
+buildscript {
+  repositories {
+    maven { url gradlePluginsRepository }
+  }
+
+  dependencies {
+    classpath("com.moowork.gradle:gradle-node-plugin:1.2.0")
+  }
+}
+
+apply plugin: "com.moowork.node"
+
+node {
+  download = true
+  version = '8.9.4'
+}
+
+task build(dependsOn: npmInstall, type: NpmTask, group: 'build') {
+  args = ['run', 'package']
+}
+
+npmInstall.args = ['--loglevel', 'info']
