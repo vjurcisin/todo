@@ -4,12 +4,8 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 import javax.inject.Inject;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
-import uu.app.authentication.Session;
-import uu.app.authorization.AuthorizationResult;
 import uu.app.datastore.exceptions.DatastoreRuntimeException;
 import uu.app.validation.ValidationResult;
 import uu.app.validation.Validator;
@@ -25,10 +21,8 @@ import uu.todo01.main.dao.ListDao;
 @Component
 public class ItemsAbl {
 
-  private static final Logger LOG = LoggerFactory.getLogger(ItemsAbl.class);
-
   private static final String ATTR_AWID = "awid";
-  private static final String LIST = "list";
+  private static final String ATTR_ID = "_id";
 
   private static final String UNSUPPORTED_KEYS = "unsupportedKeys";
 
@@ -87,6 +81,6 @@ public class ItemsAbl {
   private boolean listExists(String awid, String list) {
     return listDao.getCount(new Query()
       .addCriteria(where(ATTR_AWID).is(awid))
-      .addCriteria(where(LIST).is(list))) > 0;
+      .addCriteria(where(ATTR_ID).is(list))) > 0;
   }
 }

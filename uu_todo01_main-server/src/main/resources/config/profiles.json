@@ -12,7 +12,8 @@
     "useCaseMap": {
       "init": ["AwidOwner"],
       "defaultUve": ["Public"],
-      "item/create": ["Authorities", "Executives"]
+      "item/create": ["Authorities", "Executives"],
+      "list/create": ["Authorities", "Executives"]
     }
   }
 }

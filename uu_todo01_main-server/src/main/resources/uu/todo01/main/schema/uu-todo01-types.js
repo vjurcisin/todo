@@ -5,3 +5,6 @@ const itemCreateDtoInType = shape({
   text: string(1,1000).isRequired()
 });
 
+const listCreateDtoInType = shape({
+  name: string(1,30).isRequired()
+})
