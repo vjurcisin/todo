@@ -31,7 +31,7 @@ public class ListsAbl {
   @Inject
   private ModelMapper modelMapper;
 
-  public ListCreateDtoOut createItem(
+  public ListCreateDtoOut createList(
     String awid,
     ListCreateDtoIn dtoIn) {
 

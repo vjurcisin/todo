@@ -78,7 +78,7 @@ public class ItemsAbl {
     return dtoOut;
   }
 
-  private boolean listExists(String awid, String list) {
+  public boolean listExists(String awid, String list) {
     return listDao.getCount(new Query()
       .addCriteria(where(ATTR_AWID).is(awid))
       .addCriteria(where(ATTR_ID).is(list))) > 0;
