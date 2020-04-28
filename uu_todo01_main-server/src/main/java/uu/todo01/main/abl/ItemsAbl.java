@@ -13,8 +13,11 @@ import uu.app.validation.utils.ValidationResultUtils;
 import uu.todo01.main.abl.entity.Item;
 import uu.todo01.main.api.dto.ItemCreateDtoIn;
 import uu.todo01.main.api.dto.ItemCreateDtoOut;
+import uu.todo01.main.api.dto.ItemGetDtoIn;
+import uu.todo01.main.api.dto.ItemGetDtoOut;
 import uu.todo01.main.api.exceptions.CreateItemRuntimeException;
 import uu.todo01.main.api.exceptions.CreateItemRuntimeException.Error;
+import uu.todo01.main.api.exceptions.GetItemRuntimeException;
 import uu.todo01.main.dao.ItemDao;
 import uu.todo01.main.dao.ListDao;
 
@@ -82,5 +85,27 @@ public class ItemsAbl {
     return listDao.getCount(new Query()
       .addCriteria(where(ATTR_AWID).is(awid))
       .addCriteria(where(ATTR_ID).is(list))) > 0;
+  }
+
+  public ItemGetDtoOut getItem(String awid, ItemGetDtoIn dtoIn) {
+    // HDS 1
+    // HDS 1.1
+    ValidationResult validationResult = validator.validate(dtoIn);
+
+    // HDS 1.3
+    if (!validationResult.isValid()) {  // A2
+      throw new GetItemRuntimeException(GetItemRuntimeException.Error.INVALID_DTO_IN,
+        ValidationResultUtils.validationResultToAppErrorMap(validationResult));
+    }
+
+    Item item = itemDao.get(awid, dtoIn.getId());
+
+    if (item == null) { // A3
+      throw new GetItemRuntimeException(GetItemRuntimeException.Error.ITEM_DOES_NOT_EXIST,
+        ValidationResultUtils.validationResultToAppErrorMap(validationResult));
+    }
+
+    return new ItemGetDtoOut()
+      .setItem(item);
   }
 }

@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
-import java.util.Collections;
+import com.google.common.collect.Sets;
 import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,7 +49,7 @@ public class CreateItemTest extends Todo01MainAbstractTest {
 
     when(itemsAbl.listExists(any(), any())).thenReturn(true);
     when(authorization.authorize(any(), any()))
-      .thenReturn(new DefaultAuthorizationResult(true, Collections.emptySet()));
+      .thenReturn(new DefaultAuthorizationResult(true, Sets.newHashSet("Authorities")));
   }
 
   @Test
@@ -68,7 +68,7 @@ public class CreateItemTest extends Todo01MainAbstractTest {
   }
 
   @Test
-  public void testCreateListA2() {
+  public void testCreateItemListNullA2() {
     ItemCreateDtoIn dtoIn = new ItemCreateDtoIn()
       .setList(null)
       .setText("Horcica");
@@ -79,7 +79,18 @@ public class CreateItemTest extends Todo01MainAbstractTest {
   }
 
   @Test
-  public void testCreateListA3() {
+  public void testCreateItemTextNullA2() {
+    ItemCreateDtoIn dtoIn = new ItemCreateDtoIn()
+      .setList("5ea51be66240aa0190aa3ca7a")
+      .setText(null);
+
+    assertThatThrownBy(() -> appClient.post(Uri.parse(uri), dtoIn, ItemCreateDtoOut.class))
+      .isInstanceOf(RemoteApplicationException.class)
+      .hasFieldOrPropertyWithValue("code", Error.INVALID_DTO_IN.getCode());
+  }
+
+  @Test
+  public void testCreateItemA3() {
     when(itemsAbl.listExists(any(), any())).thenReturn(false);
 
     ItemCreateDtoIn dtoIn = new ItemCreateDtoIn()

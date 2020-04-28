@@ -26,6 +26,14 @@
         "consumes" : "*/*",
         "produces" : "application/*"
       },
+      "item/get" : {
+        "realization" : "uu.todo01.main.api.ItemsController::getItem",
+        "httpMethod" : "GET",
+        "type" : "CMD",
+        "primary" : false,
+        "consumes" : "*/*",
+        "produces" : "application/*"
+      },
       "list/create" : {
         "realization" : "uu.todo01.main.api.ListsController::createItem",
         "httpMethod" : "POST",

@@ -8,3 +8,7 @@ const itemCreateDtoInType = shape({
 const listCreateDtoInType = shape({
   name: string(1,30).isRequired()
 })
+
+const itemGetDtoInType = shape({
+  id: string(1, 32).isRequired()
+})
