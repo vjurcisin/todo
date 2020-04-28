@@ -18,6 +18,14 @@
         "consumes" : "*/*",
         "produces" : "application/*"
       },
+      "item/complete" : {
+        "realization" : "uu.todo01.main.api.ItemsController::completeItem",
+        "httpMethod" : "POST",
+        "type" : "CMD",
+        "primary" : false,
+        "consumes" : "*/*",
+        "produces" : "application/*"
+      },
       "item/create" : {
         "realization" : "uu.todo01.main.api.ItemsController::createItem",
         "httpMethod" : "POST",
@@ -28,6 +36,14 @@
       },
       "item/get" : {
         "realization" : "uu.todo01.main.api.ItemsController::getItem",
+        "httpMethod" : "GET",
+        "type" : "CMD",
+        "primary" : false,
+        "consumes" : "*/*",
+        "produces" : "application/*"
+      },
+      "item/list" : {
+        "realization" : "uu.todo01.main.api.ItemsController::listItem",
         "httpMethod" : "GET",
         "type" : "CMD",
         "primary" : false,

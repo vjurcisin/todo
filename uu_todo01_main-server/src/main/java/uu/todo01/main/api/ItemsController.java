@@ -11,10 +11,14 @@ import uu.app.server.CommandContext;
 import uu.app.server.annotation.Command;
 import uu.app.server.annotation.CommandController;
 import uu.todo01.main.abl.ItemsAbl;
+import uu.todo01.main.api.dto.ItemCompleteDtoIn;
+import uu.todo01.main.api.dto.ItemCompleteDtoOut;
 import uu.todo01.main.api.dto.ItemCreateDtoIn;
 import uu.todo01.main.api.dto.ItemCreateDtoOut;
 import uu.todo01.main.api.dto.ItemGetDtoIn;
 import uu.todo01.main.api.dto.ItemGetDtoOut;
+import uu.todo01.main.api.dto.ItemListDtoIn;
+import uu.todo01.main.api.dto.ItemListDtoOut;
 
 @CommandController
 public final class ItemsController {
@@ -36,5 +40,21 @@ public final class ItemsController {
     String awid = ctx.getUri().getAwid();
 
     return itemsAbl.getItem(awid, dtoIn);
+  }
+
+  @Command(path = "item/complete", method = POST)
+  public ItemCompleteDtoOut completeItem(CommandContext<ItemCompleteDtoIn> ctx) {
+    final ItemCompleteDtoIn dtoIn = ctx.getDtoIn();
+    String awid = ctx.getUri().getAwid();
+
+    return itemsAbl.completeItem(awid, dtoIn);
+  }
+
+  @Command(path = "item/list", method = GET)
+  public ItemListDtoOut listItem(CommandContext<ItemListDtoIn> ctx) {
+    final ItemListDtoIn dtoIn = ctx.getDtoIn();
+    String awid = ctx.getUri().getAwid();
+
+    return itemsAbl.listItem(awid, dtoIn);
   }
 }

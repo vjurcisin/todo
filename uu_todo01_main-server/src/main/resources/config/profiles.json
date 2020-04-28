@@ -14,6 +14,8 @@
       "defaultUve": ["Public"],
       "item/create": ["Authorities", "Executives"],
       "item/get": ["Authorities", "Executives", "Readers"],
+      "item/complete": ["Authorities", "Executives", "Readers"],
+      "item/list": ["Authorities", "Executives", "Readers"],
       "list/create": ["Authorities", "Executives"]
     }
   }

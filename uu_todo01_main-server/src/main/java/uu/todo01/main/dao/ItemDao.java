@@ -9,6 +9,8 @@ public interface ItemDao extends UuObjectDao<Item> {
 
   Item setCompleted(String awid, String id, Boolean completed);
 
+  PagedResult<Item> list(String awid, Boolean completed, PageInfo pageInfo);
+
   PagedResult<Item> list(String awid, String list, PageInfo pageInfo);
 
   PagedResult<Item> list(String awid, String list, Boolean completed, PageInfo pageInfo);

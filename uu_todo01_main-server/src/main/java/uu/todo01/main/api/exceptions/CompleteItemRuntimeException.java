@@ -5,27 +5,26 @@ import uu.app.exception.AppErrorMap;
 import uu.app.exception.AppRuntimeException;
 import uu.app.exception.ErrorCode;
 
-public final class GetItemRuntimeException extends AppRuntimeException {
+public final class CompleteItemRuntimeException extends AppRuntimeException {
 
-  private static final String ERROR_PREFIX = "uu-todo01-main/item/get";
+  private static final String ERROR_PREFIX = "uu-todo01-main/item/complete";
 
-  public GetItemRuntimeException(GetItemRuntimeException.Error code, Map<String, ?> paramMap, Throwable cause) {
+  public CompleteItemRuntimeException(CompleteItemRuntimeException.Error code, Map<String, ?> paramMap, Throwable cause) {
     super(code.getCode(), code.getMessage(), (AppErrorMap) null, paramMap, cause);
   }
 
-  public GetItemRuntimeException(GetItemRuntimeException.Error code, String message, Object... params) {
+  public CompleteItemRuntimeException(CompleteItemRuntimeException.Error code, String message, Object... params) {
     super(code.getCode(), message, params);
   }
 
-  public GetItemRuntimeException(GetItemRuntimeException.Error code, Map<String, ?> paramMap) {
+  public CompleteItemRuntimeException(CompleteItemRuntimeException.Error code, Map<String, ?> paramMap) {
     super(code.getCode(), code.getMessage(), (AppErrorMap) null, paramMap, null);
   }
 
   public enum Error {
 
     INVALID_DTO_IN(ErrorCode.application(ERROR_PREFIX + "/invalidDtoIn"), "DtoIn is not valid."),
-    ITEM_DOES_NOT_EXIST(ErrorCode.application(ERROR_PREFIX + "/itemDoesNotExist"), "Item with given id does not exist."),
-    ITEM_DAO_GET_FAILED(ErrorCode.application(ERROR_PREFIX + "/itemDaoGetFailed"), "Get item by item DAO get failed.");
+    ITEM_DAO_SET_COMPLETED_FAILED(ErrorCode.application(ERROR_PREFIX + "/itemDaoSetCompletedFailed"), "Update item by item DAO setCompleted failed.");
 
     private ErrorCode code;
 

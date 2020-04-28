@@ -59,4 +59,14 @@ public class ItemMongoDao extends UuObjectMongoDao<Item> implements ItemDao {
 
     return find(query, pageInfo);
   }
+
+  @Override
+  public PagedResult<Item> list(String awid, Boolean completed, PageInfo pageInfo) {
+    Query query = new Query()
+      .addCriteria(Criteria.where(ATTR_AWID).is(awid))
+      .addCriteria(Criteria.where(COMPLETED).is(completed));
+
+    return find(query, pageInfo);
+  }
+
 }
