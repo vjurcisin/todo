@@ -15,9 +15,9 @@ import uu.app.client.AppClient;
 import uu.app.client.AppClientFactory;
 import uu.app.client.RemoteApplicationException;
 import uu.app.uri.Uri;
-import uu.todo01.main.api.dto.ListCreateDtoIn;
-import uu.todo01.main.api.dto.ListCreateDtoOut;
-import uu.todo01.main.api.exceptions.CreateListRuntimeException.Error;
+import uu.todo01.main.api.dto.list.ListCreateDtoIn;
+import uu.todo01.main.api.dto.list.ListCreateDtoOut;
+import uu.todo01.main.api.exceptions.list.CreateListRuntimeException.Error;
 
 public class CreateListTest extends Todo01MainAbstractTest {
 

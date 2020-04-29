@@ -51,8 +51,24 @@
         "produces" : "application/*"
       },
       "list/create" : {
-        "realization" : "uu.todo01.main.api.ListsController::createItem",
+        "realization" : "uu.todo01.main.api.ListsController::createList",
         "httpMethod" : "POST",
+        "type" : "CMD",
+        "primary" : false,
+        "consumes" : "*/*",
+        "produces" : "application/*"
+      },
+      "list/get" : {
+        "realization" : "uu.todo01.main.api.ListsController::getList",
+        "httpMethod" : "GET",
+        "type" : "CMD",
+        "primary" : false,
+        "consumes" : "*/*",
+        "produces" : "application/*"
+      },
+      "list/list" : {
+        "realization" : "uu.todo01.main.api.ListsController::listList",
+        "httpMethod" : "GET",
         "type" : "CMD",
         "primary" : false,
         "consumes" : "*/*",

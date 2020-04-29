@@ -1,4 +1,4 @@
-package uu.todo01.main.api.dto;
+package uu.todo01.main.api.dto.list;
 
 import uu.app.dto.AbstractDtoOut;
 import uu.todo01.main.abl.entity.List;

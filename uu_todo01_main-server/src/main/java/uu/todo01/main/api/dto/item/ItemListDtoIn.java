@@ -1,4 +1,4 @@
-package uu.todo01.main.api.dto;
+package uu.todo01.main.api.dto.item;
 
 import uu.app.datastore.domain.PageInfo;
 import uu.app.validation.ValidationType;

@@ -17,9 +17,9 @@ import uu.app.client.AppClientFactory;
 import uu.app.client.RemoteApplicationException;
 import uu.app.uri.Uri;
 import uu.todo01.main.abl.entity.Item;
-import uu.todo01.main.api.dto.ItemGetDtoIn;
-import uu.todo01.main.api.dto.ItemGetDtoOut;
-import uu.todo01.main.api.exceptions.GetItemRuntimeException.Error;
+import uu.todo01.main.api.dto.item.ItemGetDtoIn;
+import uu.todo01.main.api.dto.item.ItemGetDtoOut;
+import uu.todo01.main.api.exceptions.item.GetItemRuntimeException.Error;
 import uu.todo01.main.dao.ItemDao;
 
 public class GetItemTest extends Todo01MainAbstractTest {

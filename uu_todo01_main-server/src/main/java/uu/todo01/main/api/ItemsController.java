@@ -4,21 +4,18 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import javax.inject.Inject;
-import org.springframework.web.bind.annotation.RequestMethod;
-import uu.app.authentication.Session;
-import uu.app.authorization.AuthorizationResult;
 import uu.app.server.CommandContext;
 import uu.app.server.annotation.Command;
 import uu.app.server.annotation.CommandController;
 import uu.todo01.main.abl.ItemsAbl;
-import uu.todo01.main.api.dto.ItemCompleteDtoIn;
-import uu.todo01.main.api.dto.ItemCompleteDtoOut;
-import uu.todo01.main.api.dto.ItemCreateDtoIn;
-import uu.todo01.main.api.dto.ItemCreateDtoOut;
-import uu.todo01.main.api.dto.ItemGetDtoIn;
-import uu.todo01.main.api.dto.ItemGetDtoOut;
-import uu.todo01.main.api.dto.ItemListDtoIn;
-import uu.todo01.main.api.dto.ItemListDtoOut;
+import uu.todo01.main.api.dto.item.ItemCompleteDtoIn;
+import uu.todo01.main.api.dto.item.ItemCompleteDtoOut;
+import uu.todo01.main.api.dto.item.ItemCreateDtoIn;
+import uu.todo01.main.api.dto.item.ItemCreateDtoOut;
+import uu.todo01.main.api.dto.item.ItemGetDtoIn;
+import uu.todo01.main.api.dto.item.ItemGetDtoOut;
+import uu.todo01.main.api.dto.item.ItemListDtoIn;
+import uu.todo01.main.api.dto.item.ItemListDtoOut;
 
 @CommandController
 public final class ItemsController {

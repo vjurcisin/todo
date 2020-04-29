@@ -30,3 +30,14 @@ const itemListDtoInType = shape({
 const listCreateDtoInType = shape({
   name: string(1, 30).isRequired()
 })
+
+const listGetDtoInType = shape({
+  id: id().isRequired()
+})
+
+const listListDtoInType = shape({
+  pageInfo: shape({
+    pageIndex: integer(0, null),
+    pageSize: integer(0, null)
+  })
+})

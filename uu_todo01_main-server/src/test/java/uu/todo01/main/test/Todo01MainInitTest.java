@@ -2,17 +2,15 @@ package uu.todo01.main.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 import uu.app.workspace.dto.common.OrganizationDto;
 import uu.app.workspace.dto.common.UserDto;
 import uu.app.workspace.dto.workspace.LicenseOwnerDto;
 import uu.app.workspace.dto.workspace.SysInitAppWorkspaceDtoIn;
-import uu.todo01.main.test.Todo01MainAbstractTest;
 import uu.todo01.main.api.dto.Todo01MainInitDtoIn;
 import uu.todo01.main.api.dto.Todo01MainInitDtoOut;
-
-import java.util.Arrays;
 
 public class Todo01MainInitTest extends Todo01MainAbstractTest {
 

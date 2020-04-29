@@ -1,9 +1,9 @@
-package uu.todo01.main.api.dto;
+package uu.todo01.main.api.dto.item;
 
 import uu.app.dto.AbstractDtoOut;
 import uu.todo01.main.abl.entity.Item;
 
-public class ItemCreateDtoOut extends AbstractDtoOut {
+public class ItemGetDtoOut extends AbstractDtoOut {
 
   private Item item;
 
@@ -11,7 +11,7 @@ public class ItemCreateDtoOut extends AbstractDtoOut {
     return item;
   }
 
-  public ItemCreateDtoOut setItem(Item item) {
+  public ItemGetDtoOut setItem(Item item) {
     this.item = item;
     return this;
   }

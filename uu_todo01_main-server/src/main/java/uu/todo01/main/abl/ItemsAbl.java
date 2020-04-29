@@ -1,7 +1,7 @@
 package uu.todo01.main.abl;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
-import static uu.todo01.main.api.exceptions.GetItemRuntimeException.Error.ITEM_DAO_GET_FAILED;
+import static uu.todo01.main.api.exceptions.item.GetItemRuntimeException.Error.ITEM_DAO_GET_FAILED;
 
 import javax.inject.Inject;
 import org.modelmapper.ModelMapper;
@@ -14,19 +14,19 @@ import uu.app.validation.ValidationResult;
 import uu.app.validation.Validator;
 import uu.app.validation.utils.ValidationResultUtils;
 import uu.todo01.main.abl.entity.Item;
-import uu.todo01.main.api.dto.ItemCompleteDtoIn;
-import uu.todo01.main.api.dto.ItemCompleteDtoOut;
-import uu.todo01.main.api.dto.ItemCreateDtoIn;
-import uu.todo01.main.api.dto.ItemCreateDtoOut;
-import uu.todo01.main.api.dto.ItemGetDtoIn;
-import uu.todo01.main.api.dto.ItemGetDtoOut;
-import uu.todo01.main.api.dto.ItemListDtoIn;
-import uu.todo01.main.api.dto.ItemListDtoOut;
-import uu.todo01.main.api.exceptions.CompleteItemRuntimeException;
-import uu.todo01.main.api.exceptions.CreateItemRuntimeException;
-import uu.todo01.main.api.exceptions.CreateItemRuntimeException.Error;
-import uu.todo01.main.api.exceptions.GetItemRuntimeException;
-import uu.todo01.main.api.exceptions.ListItemRuntimeException;
+import uu.todo01.main.api.dto.item.ItemCompleteDtoIn;
+import uu.todo01.main.api.dto.item.ItemCompleteDtoOut;
+import uu.todo01.main.api.dto.item.ItemCreateDtoIn;
+import uu.todo01.main.api.dto.item.ItemCreateDtoOut;
+import uu.todo01.main.api.dto.item.ItemGetDtoIn;
+import uu.todo01.main.api.dto.item.ItemGetDtoOut;
+import uu.todo01.main.api.dto.item.ItemListDtoIn;
+import uu.todo01.main.api.dto.item.ItemListDtoOut;
+import uu.todo01.main.api.exceptions.item.CompleteItemRuntimeException;
+import uu.todo01.main.api.exceptions.item.CreateItemRuntimeException;
+import uu.todo01.main.api.exceptions.item.CreateItemRuntimeException.Error;
+import uu.todo01.main.api.exceptions.item.GetItemRuntimeException;
+import uu.todo01.main.api.exceptions.item.ListItemRuntimeException;
 import uu.todo01.main.dao.ItemDao;
 import uu.todo01.main.dao.ListDao;
 

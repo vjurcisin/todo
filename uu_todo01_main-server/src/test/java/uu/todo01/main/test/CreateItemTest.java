@@ -17,9 +17,9 @@ import uu.app.client.AppClientFactory;
 import uu.app.client.RemoteApplicationException;
 import uu.app.uri.Uri;
 import uu.todo01.main.abl.ItemsAbl;
-import uu.todo01.main.api.dto.ItemCreateDtoIn;
-import uu.todo01.main.api.dto.ItemCreateDtoOut;
-import uu.todo01.main.api.exceptions.CreateItemRuntimeException.Error;
+import uu.todo01.main.api.dto.item.ItemCreateDtoIn;
+import uu.todo01.main.api.dto.item.ItemCreateDtoOut;
+import uu.todo01.main.api.exceptions.item.CreateItemRuntimeException.Error;
 
 public class CreateItemTest extends Todo01MainAbstractTest {
 

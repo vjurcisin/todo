@@ -1,4 +1,4 @@
-package uu.todo01.main.api.exceptions;
+package uu.todo01.main.api.exceptions.item;
 
 import java.util.Map;
 import uu.app.exception.AppErrorMap;
