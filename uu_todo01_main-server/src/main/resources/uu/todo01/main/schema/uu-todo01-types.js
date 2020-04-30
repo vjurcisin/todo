@@ -11,6 +11,12 @@ const itemGetDtoInType = shape({
   id: string(1, 32).isRequired()
 })
 
+const itemUpdateDtoInType = shape({
+  item: id().isRequired(),
+  list: id(),
+  text: string(1, 1000)
+})
+
 const itemCompleteDtoInType = shape({
   item: id().isRequired(),
   completed: boolean()

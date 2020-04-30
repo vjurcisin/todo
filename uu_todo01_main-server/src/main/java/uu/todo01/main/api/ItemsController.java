@@ -16,6 +16,8 @@ import uu.todo01.main.api.dto.item.ItemGetDtoIn;
 import uu.todo01.main.api.dto.item.ItemGetDtoOut;
 import uu.todo01.main.api.dto.item.ItemListDtoIn;
 import uu.todo01.main.api.dto.item.ItemListDtoOut;
+import uu.todo01.main.api.dto.item.ItemUpdateDtoIn;
+import uu.todo01.main.api.dto.item.ItemUpdateDtoOut;
 
 @CommandController
 public final class ItemsController {
@@ -37,6 +39,14 @@ public final class ItemsController {
     String awid = ctx.getUri().getAwid();
 
     return itemsAbl.getItem(awid, dtoIn);
+  }
+
+  @Command(path = "item/update", method = POST)
+  public ItemUpdateDtoOut updateItem(CommandContext<ItemUpdateDtoIn> ctx) {
+    final ItemUpdateDtoIn dtoIn = ctx.getDtoIn();
+    String awid = ctx.getUri().getAwid();
+
+    return itemsAbl.updateItem(awid, dtoIn);
   }
 
   @Command(path = "item/complete", method = POST)

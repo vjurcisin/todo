@@ -50,6 +50,14 @@
         "consumes" : "*/*",
         "produces" : "application/*"
       },
+      "item/update" : {
+        "realization" : "uu.todo01.main.api.ItemsController::updateItem",
+        "httpMethod" : "POST",
+        "type" : "CMD",
+        "primary" : false,
+        "consumes" : "*/*",
+        "produces" : "application/*"
+      },
       "list/create" : {
         "realization" : "uu.todo01.main.api.ListsController::createList",
         "httpMethod" : "POST",

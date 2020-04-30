@@ -2,6 +2,7 @@ package uu.todo01.main.abl;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static uu.todo01.main.api.exceptions.item.GetItemRuntimeException.Error.ITEM_DAO_GET_FAILED;
+import static uu.todo01.main.api.exceptions.item.UpdateItemRuntimeException.Error.ITEM_DAO_UPDATE_FAILED;
 
 import javax.inject.Inject;
 import org.modelmapper.ModelMapper;
@@ -22,11 +23,14 @@ import uu.todo01.main.api.dto.item.ItemGetDtoIn;
 import uu.todo01.main.api.dto.item.ItemGetDtoOut;
 import uu.todo01.main.api.dto.item.ItemListDtoIn;
 import uu.todo01.main.api.dto.item.ItemListDtoOut;
+import uu.todo01.main.api.dto.item.ItemUpdateDtoIn;
+import uu.todo01.main.api.dto.item.ItemUpdateDtoOut;
 import uu.todo01.main.api.exceptions.item.CompleteItemRuntimeException;
 import uu.todo01.main.api.exceptions.item.CreateItemRuntimeException;
 import uu.todo01.main.api.exceptions.item.CreateItemRuntimeException.Error;
 import uu.todo01.main.api.exceptions.item.GetItemRuntimeException;
 import uu.todo01.main.api.exceptions.item.ListItemRuntimeException;
+import uu.todo01.main.api.exceptions.item.UpdateItemRuntimeException;
 import uu.todo01.main.dao.ItemDao;
 import uu.todo01.main.dao.ListDao;
 
@@ -53,9 +57,6 @@ public class ItemsAbl {
 
   /**
    * Create item.
-   * @param awid
-   * @param dtoIn
-   * @return
    */
   public ItemCreateDtoOut createItem(
     String awid,
@@ -105,9 +106,6 @@ public class ItemsAbl {
 
   /**
    * Get item.
-   * @param awid
-   * @param dtoIn
-   * @return
    */
   public ItemGetDtoOut getItem(String awid, ItemGetDtoIn dtoIn) {
     // HDS 1
@@ -139,9 +137,6 @@ public class ItemsAbl {
 
   /**
    * Complete item.
-   * @param awid
-   * @param dtoIn
-   * @return
    */
   public ItemCompleteDtoOut completeItem(String awid, ItemCompleteDtoIn dtoIn) {
     // HDS 1
@@ -171,9 +166,6 @@ public class ItemsAbl {
 
   /**
    * List item.
-   * @param awid
-   * @param dtoIn
-   * @return
    */
   public ItemListDtoOut listItem(String awid, ItemListDtoIn dtoIn) {
     // HDS 1
@@ -207,5 +199,40 @@ public class ItemsAbl {
     final ItemListDtoOut dtoOut = modelMapper.map(pagedResult, ItemListDtoOut.class);
     dtoOut.setUuAppErrorMap(errorMap);
     return dtoOut;
+  }
+
+  /**
+   * Update item.
+   */
+  public ItemUpdateDtoOut updateItem(String awid, ItemUpdateDtoIn dtoIn) {
+    // HDS 1
+    // HDS 1.1
+    ValidationResult validationResult = validator.validate(dtoIn);
+
+    // HDS 1.3
+    if (!validationResult.isValid()) {  // A2
+      throw new UpdateItemRuntimeException(UpdateItemRuntimeException.Error.INVALID_DTO_IN,
+        ValidationResultUtils.validationResultToAppErrorMap(validationResult));
+    }
+
+    final Item item;
+    try {
+      item = itemDao.get(awid, dtoIn.getItem());
+
+      if (dtoIn.getList() != null) {
+        item.setList(dtoIn.getList());
+      }
+      if (dtoIn.getText() != null) {
+        item.setText(dtoIn.getText());
+      }
+      itemDao.update(item);
+
+    } catch (DatastoreRuntimeException | NullPointerException ex) {   // A3
+      throw new UpdateItemRuntimeException(ITEM_DAO_UPDATE_FAILED,
+        ValidationResultUtils.validationResultToAppErrorMap(validationResult));
+    }
+
+    return new ItemUpdateDtoOut()
+      .setItem(item);
   }
 }
