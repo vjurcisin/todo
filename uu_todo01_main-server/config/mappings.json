@@ -34,6 +34,14 @@
         "consumes" : "*/*",
         "produces" : "application/*"
       },
+      "item/delete" : {
+        "realization" : "uu.todo01.main.api.ItemsController::deleteItem",
+        "httpMethod" : "POST",
+        "type" : "CMD",
+        "primary" : false,
+        "consumes" : "*/*",
+        "produces" : "application/*"
+      },
       "item/get" : {
         "realization" : "uu.todo01.main.api.ItemsController::getItem",
         "httpMethod" : "GET",
@@ -66,6 +74,14 @@
         "consumes" : "*/*",
         "produces" : "application/*"
       },
+      "list/delete" : {
+        "realization" : "uu.todo01.main.api.ListsController::deleteList",
+        "httpMethod" : "POST",
+        "type" : "CMD",
+        "primary" : false,
+        "consumes" : "*/*",
+        "produces" : "application/*"
+      },
       "list/get" : {
         "realization" : "uu.todo01.main.api.ListsController::getList",
         "httpMethod" : "GET",
@@ -77,6 +93,14 @@
       "list/list" : {
         "realization" : "uu.todo01.main.api.ListsController::listList",
         "httpMethod" : "GET",
+        "type" : "CMD",
+        "primary" : false,
+        "consumes" : "*/*",
+        "produces" : "application/*"
+      },
+      "list/update" : {
+        "realization" : "uu.todo01.main.api.ListsController::updateList",
+        "httpMethod" : "POST",
         "type" : "CMD",
         "primary" : false,
         "consumes" : "*/*",

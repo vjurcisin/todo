@@ -10,10 +10,14 @@ import uu.app.server.annotation.CommandController;
 import uu.todo01.main.abl.ListsAbl;
 import uu.todo01.main.api.dto.list.ListCreateDtoIn;
 import uu.todo01.main.api.dto.list.ListCreateDtoOut;
+import uu.todo01.main.api.dto.list.ListDeleteDtoIn;
+import uu.todo01.main.api.dto.list.ListDeleteDtoOut;
 import uu.todo01.main.api.dto.list.ListGetDtoIn;
 import uu.todo01.main.api.dto.list.ListGetDtoOut;
 import uu.todo01.main.api.dto.list.ListListDtoIn;
 import uu.todo01.main.api.dto.list.ListListDtoOut;
+import uu.todo01.main.api.dto.list.ListUpdateDtoIn;
+import uu.todo01.main.api.dto.list.ListUpdateDtoOut;
 
 @CommandController
 public final class ListsController {
@@ -37,6 +41,14 @@ public final class ListsController {
     return listsAbl.getList(awid, dtoIn);
   }
 
+  @Command(path = "list/update", method = POST)
+  public ListUpdateDtoOut updateList(CommandContext<ListUpdateDtoIn> ctx) {
+    final ListUpdateDtoIn dtoIn = ctx.getDtoIn();
+    String awid = ctx.getUri().getAwid();
+
+    return listsAbl.updateList(awid, dtoIn);
+  }
+
   @Command(path = "list/list", method = GET)
   public ListListDtoOut listList(CommandContext<ListListDtoIn> ctx) {
     final ListListDtoIn dtoIn = ctx.getDtoIn();
@@ -44,4 +56,13 @@ public final class ListsController {
 
     return listsAbl.listList(awid, dtoIn);
   }
+
+  @Command(path = "list/delete", method = POST)
+  public ListDeleteDtoOut deleteList(CommandContext<ListDeleteDtoIn> ctx) {
+    final ListDeleteDtoIn dtoIn = ctx.getDtoIn();
+    String awid = ctx.getUri().getAwid();
+
+    return listsAbl.deleteList(awid, dtoIn);
+  }
+
 }

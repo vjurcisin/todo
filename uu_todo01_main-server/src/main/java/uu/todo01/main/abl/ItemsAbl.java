@@ -1,6 +1,7 @@
 package uu.todo01.main.abl;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static uu.todo01.main.api.exceptions.item.DeleteItemRuntimeException.Error.ITEM_DAO_DELETE_FAILED;
 import static uu.todo01.main.api.exceptions.item.GetItemRuntimeException.Error.ITEM_DAO_GET_FAILED;
 import static uu.todo01.main.api.exceptions.item.UpdateItemRuntimeException.Error.ITEM_DAO_UPDATE_FAILED;
 
@@ -19,6 +20,8 @@ import uu.todo01.main.api.dto.item.ItemCompleteDtoIn;
 import uu.todo01.main.api.dto.item.ItemCompleteDtoOut;
 import uu.todo01.main.api.dto.item.ItemCreateDtoIn;
 import uu.todo01.main.api.dto.item.ItemCreateDtoOut;
+import uu.todo01.main.api.dto.item.ItemDeleteDtoIn;
+import uu.todo01.main.api.dto.item.ItemDeleteDtoOut;
 import uu.todo01.main.api.dto.item.ItemGetDtoIn;
 import uu.todo01.main.api.dto.item.ItemGetDtoOut;
 import uu.todo01.main.api.dto.item.ItemListDtoIn;
@@ -28,6 +31,7 @@ import uu.todo01.main.api.dto.item.ItemUpdateDtoOut;
 import uu.todo01.main.api.exceptions.item.CompleteItemRuntimeException;
 import uu.todo01.main.api.exceptions.item.CreateItemRuntimeException;
 import uu.todo01.main.api.exceptions.item.CreateItemRuntimeException.Error;
+import uu.todo01.main.api.exceptions.item.DeleteItemRuntimeException;
 import uu.todo01.main.api.exceptions.item.GetItemRuntimeException;
 import uu.todo01.main.api.exceptions.item.ListItemRuntimeException;
 import uu.todo01.main.api.exceptions.item.UpdateItemRuntimeException;
@@ -234,5 +238,30 @@ public class ItemsAbl {
 
     return new ItemUpdateDtoOut()
       .setItem(item);
+  }
+
+  /**
+   * Delete item.
+   */
+  public ItemDeleteDtoOut deleteItem(String awid, ItemDeleteDtoIn dtoIn) {
+    // HDS 1
+    // HDS 1.1
+    ValidationResult validationResult = validator.validate(dtoIn);
+
+    // HDS 1.3
+    if (!validationResult.isValid()) {  // A2
+      throw new DeleteItemRuntimeException(DeleteItemRuntimeException.Error.INVALID_DTO_IN,
+        ValidationResultUtils.validationResultToAppErrorMap(validationResult));
+    }
+
+    try {
+      final Item item = itemDao.get(awid, dtoIn.getId());
+      itemDao.delete(item);
+    } catch (DatastoreRuntimeException ex) {
+      throw new DeleteItemRuntimeException(ITEM_DAO_DELETE_FAILED,
+        ValidationResultUtils.validationResultToAppErrorMap(validationResult));
+    }
+
+    return new ItemDeleteDtoOut();
   }
 }

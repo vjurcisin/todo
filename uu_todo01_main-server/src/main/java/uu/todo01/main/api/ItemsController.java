@@ -12,6 +12,8 @@ import uu.todo01.main.api.dto.item.ItemCompleteDtoIn;
 import uu.todo01.main.api.dto.item.ItemCompleteDtoOut;
 import uu.todo01.main.api.dto.item.ItemCreateDtoIn;
 import uu.todo01.main.api.dto.item.ItemCreateDtoOut;
+import uu.todo01.main.api.dto.item.ItemDeleteDtoIn;
+import uu.todo01.main.api.dto.item.ItemDeleteDtoOut;
 import uu.todo01.main.api.dto.item.ItemGetDtoIn;
 import uu.todo01.main.api.dto.item.ItemGetDtoOut;
 import uu.todo01.main.api.dto.item.ItemListDtoIn;
@@ -63,5 +65,13 @@ public final class ItemsController {
     String awid = ctx.getUri().getAwid();
 
     return itemsAbl.listItem(awid, dtoIn);
+  }
+
+  @Command(path = "item/delete", method = POST)
+  public ItemDeleteDtoOut deleteItem(CommandContext<ItemDeleteDtoIn> ctx) {
+    final ItemDeleteDtoIn dtoIn = ctx.getDtoIn();
+    String awid = ctx.getUri().getAwid();
+
+    return itemsAbl.deleteItem(awid, dtoIn);
   }
 }

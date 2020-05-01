@@ -17,9 +17,13 @@
       "item/update": ["Authorities", "Executives"],
       "item/complete": ["Authorities", "Executives", "Readers"],
       "item/list": ["Authorities", "Executives", "Readers"],
+      "item/delete": ["Authorities", "Executives"],
+
       "list/create": ["Authorities", "Executives"],
       "list/get": ["Authorities", "Executives", "Readers"],
-      "list/list": ["Authorities", "Executives", "Readers"]
+      "list/list": ["Authorities", "Executives", "Readers"],
+      "list/update": ["Authorities", "Executives"],
+      "list/delete": ["Authorities", "Executives"]
     }
   }
 }

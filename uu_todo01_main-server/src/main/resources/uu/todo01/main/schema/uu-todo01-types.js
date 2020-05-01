@@ -31,6 +31,10 @@ const itemListDtoInType = shape({
   })
 })
 
+const itemDeleteDtoInType = shape({
+  id: id().isRequired()
+})
+
 // List validations
 
 const listCreateDtoInType = shape({
@@ -41,9 +45,19 @@ const listGetDtoInType = shape({
   id: id().isRequired()
 })
 
+const listUpdateDtoInType = shape({
+  list: id().isRequired(),
+  name: string(1, 30).isRequired()
+})
+
 const listListDtoInType = shape({
   pageInfo: shape({
     pageIndex: integer(0, null),
     pageSize: integer(0, null)
   })
 })
+
+const listDeleteDtoInType = shape({
+  id: id().isRequired(),
+  forceDelete: boolean()
+});
