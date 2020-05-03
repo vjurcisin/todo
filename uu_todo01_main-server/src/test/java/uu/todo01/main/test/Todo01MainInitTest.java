@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import uu.app.workspace.dto.common.OrganizationDto;
 import uu.app.workspace.dto.common.UserDto;
@@ -12,6 +13,7 @@ import uu.app.workspace.dto.workspace.SysInitAppWorkspaceDtoIn;
 import uu.todo01.main.api.dto.Todo01MainInitDtoIn;
 import uu.todo01.main.api.dto.Todo01MainInitDtoOut;
 
+@Ignore
 public class Todo01MainInitTest extends Todo01MainAbstractTest {
 
   private String awid = "11111111111111111111111111111111";

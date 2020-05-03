@@ -65,6 +65,25 @@ let Calls = {
     }
 
     return targetUriStr;
+  },
+
+  asyncCall(data, uri, method = "post") {
+    return new Promise((resolve, reject) => {
+      let commandUri = Calls.getCommandUri(uri);
+      Calls.call(method, commandUri, { data: data, done: resolve, fail: reject });
+    });
+  },
+
+  // List calls
+
+  listList(dtoIn) {
+    return Calls.asyncCall(dtoIn, "list/list", "get");
+  },
+
+  // Items calls
+
+  listItem(dtoIn) {
+    return Calls.asyncCall(dtoIn, "item/list", "get");
   }
 };
 
