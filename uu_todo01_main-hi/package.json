@@ -1,7 +1,7 @@
 {
   "name": "uu_todo01_main-hi",
   "version": "0.1.0",
-  "description": "",
+  "description": "uuTodo Application",
   "license": "License Commercial",
   "namespace": "UuTodo01",
   "spec": "uu5-app; uu_appg01@1.6.3",

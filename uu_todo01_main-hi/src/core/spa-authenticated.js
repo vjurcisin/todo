@@ -10,6 +10,7 @@ import Left from "./left.js";
 import Bottom from "./bottom.js";
 import About from "../routes/about.js";
 import Home from "../routes/home.js";
+import List from "../routes/list";
 //@@viewOff:imports
 
 const SpaAuthenticated = UU5.Common.VisualComponent.create({
@@ -71,6 +72,7 @@ const SpaAuthenticated = UU5.Common.VisualComponent.create({
           routes={{
             "": "home",
             home: { component: <Home identity={this.props.identity} /> },
+            list: { component: <List identity={this.props.identity} /> },
             about: { component: <About identity={this.props.identity} /> }
           }}
           controlled={false}

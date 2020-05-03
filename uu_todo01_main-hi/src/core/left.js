@@ -63,6 +63,10 @@ export const Left = UU5.Common.VisualComponent.create({
     return [{ code: "home", content: this.getLsiComponent("home") }];
   },
 
+  _getTodoItems() {
+    return [{ code: "list", content: this.getLsiComponent("list") }];
+  },
+
   _onItemClick(item, e) {
     Tools.setRoute(item);
   },
@@ -82,6 +86,15 @@ export const Left = UU5.Common.VisualComponent.create({
           ref_={ref => (UU5.Environment.App.menuRef = ref)}
           className={this.getClassName("menu")}
           items={this._getItems()}
+          onClick={this._onItemClick}
+          onWheelClick={Tools.openNewTab}
+          onCtrlClick={Tools.openNewTab}
+        />
+
+        <Plus4U5.App.Menu
+          ref_={ref => (UU5.Environment.App.menuRef = ref)}
+          className={this.getClassName("menu")}
+          items={this._getTodoItems()}
           onClick={this._onItemClick}
           onWheelClick={Tools.openNewTab}
           onCtrlClick={Tools.openNewTab}

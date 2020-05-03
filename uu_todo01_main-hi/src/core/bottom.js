@@ -43,7 +43,7 @@ export const Bottom = UU5.Common.VisualComponent.create({
 
   //@@viewOn:render
   render() {
-    return <UU5.Common.Div {...this.getMainPropsToPass()}>Powered by Unicorn Application Framework</UU5.Common.Div>;
+    return <UU5.Common.Div {...this.getMainPropsToPass()}>uuTodo Application - Vincent Jurcisin-Kukla 2020</UU5.Common.Div>;
   }
   //@@viewOff:render
 });

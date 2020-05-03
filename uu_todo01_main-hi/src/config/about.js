@@ -2,8 +2,8 @@ import * as UU5 from "uu5g04";
 
 export const About = {
   about: {
-    cs: "Demo aplikace je šablona pro vývoj nových aplikací.",
-    en: "Demo application is a template for developing new applications."
+    cs: "Aplikacia na spravu todo zoznamu",
+    en: "Managing of todo list"
   },
   licence: {
     termsOfUse: "https://unicorn.com/tou/your_product",
@@ -20,13 +20,13 @@ export const About = {
     authorities: {
       cs: [
         {
-          name: "Name Surname",
+          name: "Vincent Jurcisin-Kukla",
           uri: "https://www.unicorn.com/"
         }
       ],
       en: [
         {
-          name: "Name Surname",
+          name: "Vincent Jurcisin-Kukla",
           uri: "https://www.unicorn.com/"
         }
       ]
@@ -34,31 +34,8 @@ export const About = {
   },
   leadingAuthors: [
     {
-      name: "Some Name",
-      uuIdentity: "4-4-1",
-      role: {
-        en: "Chief Business Architect & Stakeholder"
-      }
-    },
-    {
-      name: "Other Name",
-      uuIdentity: "4-4-1",
-      role: {
-        en: "Head of Development"
-      }
-    }
-  ],
-  otherAuthors: [
-    {
-      name: "Your Name",
-      uuIdentity: "4-4-1",
-      role: {
-        en: "Developer"
-      }
-    },
-    {
-      name: "More Names",
-      uuIdentity: "4-4-1",
+      name: "Vincent Jurcisin-Kukla",
+      uuIdentity: "21-7746-1",
       role: {
         en: "Developer"
       }
