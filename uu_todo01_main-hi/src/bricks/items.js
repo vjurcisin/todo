@@ -23,9 +23,17 @@ export const Items = UU5.Common.VisualComponent.create({
   //@@viewOff:propTypes
 
   //@@viewOn:getDefaultProps
+  getDefaultProps() {
+    return {
+      list: null
+    }
+  },
   //@@viewOff:getDefaultProps
 
   //@@viewOn:reactLifeCycle
+  componentDidUpdate() {
+    this._data.reload();
+  },
   //@@viewOff:reactLifeCycle
 
   //@@viewOn:interface
@@ -35,8 +43,8 @@ export const Items = UU5.Common.VisualComponent.create({
   //@@viewOff:overriding
 
   //@@viewOn:private
-  _loadItems(dtoIn) {
-    return Calls.listItem(dtoIn);
+  _loadItems() {
+    return Calls.listItem(this.props.list);
   },
   //@@viewOff:private
 
@@ -44,22 +52,27 @@ export const Items = UU5.Common.VisualComponent.create({
   render() {
     return (
       <UU5.Common.ListDataManager
-        onLoad={this._loadItems} data={{list: '5ea7cc446240aa19a85b7416'}}
+        onReload={this._loadItems}
+        ref_={(me) => {this._data = me}}
       >
         {( {data, errorState} ) => {
-          console.log("Data" + data);
-          if (errorState) {
+          if (data == null) {
+            return "Missing data";
+          }
+          else if (errorState) {
             return "Error";
           } else if (data) {
             return (
               <>
                 {data.map(
                   ({ id, text }) => (
-                    <UU5.Bricks.Well style={"border-bottom: 1px solid grey;"} key={id}>
-                      <UU5.Bricks.P>
-                        {text}
-                      </UU5.Bricks.P>
-                    </UU5.Bricks.Well>
+                    <div key={id}>
+                      <UU5.Bricks.Well style={ {borderBottom: '1px solid grey'} }>
+                        <UU5.Bricks.P>
+                          {text}
+                        </UU5.Bricks.P>
+                      </UU5.Bricks.Well>
+                    </div>
                   )
                 )}
               </>

@@ -23,6 +23,11 @@ export const List = UU5.Common.VisualComponent.create({
   //@@viewOff:propTypes
 
   //@@viewOn:getDefaultProps
+  getDefaultProps() {
+    return {
+      onClick: () => {}
+    }
+  },
   //@@viewOff:getDefaultProps
 
   //@@viewOn:reactLifeCycle
@@ -54,11 +59,13 @@ export const List = UU5.Common.VisualComponent.create({
               <>
                 {data.map(
                   ({ id, name }) => (
-                    <UU5.Bricks.Well style={"border-bottom: 1px solid grey;"} key={id}>
-                      <UU5.Bricks.P>
-                        {name}
-                      </UU5.Bricks.P>
-                    </UU5.Bricks.Well>
+                    <div onClick={() => this.props.onClick({list: id})} key={id}>
+                      <UU5.Bricks.Well style={ {borderBottom: '1px solid grey'} }>
+                        <UU5.Bricks.P>
+                          {name}
+                        </UU5.Bricks.P>
+                      </UU5.Bricks.Well>
+                    </div>
                   )
                 )
                 }

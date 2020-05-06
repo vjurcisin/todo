@@ -2,7 +2,6 @@
 import * as UU5 from "uu5g04";
 import "uu5g04-bricks";
 import Config from "./config/config.js";
-import Calls from "../calls";
 import Items from "../bricks/items";
 import Lists from "../bricks/list"
 //@@viewOff:imports
@@ -25,12 +24,31 @@ export const List = UU5.Common.VisualComponent.create({
   //@@viewOff:propTypes
 
   //@@viewOn:getDefaultProps
+
   //@@viewOff:getDefaultProps
 
   //@@viewOn:reactLifeCycle
+  getInitialState() {
+    return {
+      list: null
+    };
+  },
+
+  // componentDidMount() {
+  //   console.log("Mount List: ", this.state.list);
+  // },
+  //
+  // componentDidUpdate() {
+  //   console.log("Mount List: ", this.state.list);
+  // },
   //@@viewOff:reactLifeCycle
 
   //@@viewOn:interface
+  setList(list) {
+    this.setState({
+      list: list
+    });
+  },
   //@@viewOff:interface
 
   //@@viewOn:overriding
@@ -45,10 +63,10 @@ export const List = UU5.Common.VisualComponent.create({
                                   noSpacing={true}>
       <UU5.Bricks.Row noSpacing={true} display={"flex"}>
         <UU5.Bricks.Column noSpacing={true} colWidth={"xs-12 s-3 m-3"}>
-          <Lists />
+          <Lists onClick={this.setList} />
         </UU5.Bricks.Column>
-        <UU5.Bricks.Column noSpacing={false} colWidth={"xs-12 s-9 m-9"} style="backgroundColor: darblue;">
-          <Items />
+        <UU5.Bricks.Column noSpacing={false} colWidth={"xs-12 s-9 m-9"} style="backgroundColor: darkblue;">
+          <Items list={this.state.list} />
         </UU5.Bricks.Column>
       </UU5.Bricks.Row>
     </UU5.Bricks.Container>);
