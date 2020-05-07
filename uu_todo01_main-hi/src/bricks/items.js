@@ -32,7 +32,7 @@ export const Items = UU5.Common.VisualComponent.create({
 
   //@@viewOn:reactLifeCycle
   componentDidUpdate() {
-    this._data.reload();
+    this._listDataManager.reload();
   },
   //@@viewOff:reactLifeCycle
 
@@ -53,7 +53,7 @@ export const Items = UU5.Common.VisualComponent.create({
     return (
       <UU5.Common.ListDataManager
         onReload={this._loadItems}
-        ref_={(me) => {this._data = me}}
+        ref_={(me) => {this._listDataManager = me}}
       >
         {( {data, errorState} ) => {
           if (data == null) {
@@ -67,7 +67,7 @@ export const Items = UU5.Common.VisualComponent.create({
                 {data.map(
                   ({ id, text }) => (
                     <div key={id}>
-                      <UU5.Bricks.Well style={ {borderBottom: '1px solid grey'} }>
+                      <UU5.Bricks.Well style={ { borderBottom: '1px solid grey' } }>
                         <UU5.Bricks.P>
                           {text}
                         </UU5.Bricks.P>

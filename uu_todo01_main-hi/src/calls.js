@@ -80,7 +80,11 @@ let Calls = {
     return Calls.asyncCall(dtoIn, "list/list", "get");
   },
 
-  // Items calls
+  createList(dtoIn) {
+    return Calls.asyncCall(dtoIn, "list/create");
+  },
+
+  // Item calls
 
   listItem(dtoIn) {
     return Calls.asyncCall(dtoIn, "item/list", "get");
