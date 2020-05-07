@@ -3,7 +3,7 @@ import * as UU5 from "uu5g04";
 import "uu5g04-bricks";
 import Config from "./config/config.js";
 import Calls from "../calls";
-import Lsi from "../bricks/list-lsi"
+import Lsi from "../bricks/list-lsi";
 import CreateLsi from "../bricks/create-list-lsi.js";
 import CreateListForm from "./create-list-form";
 //@@viewOff:imports
@@ -63,6 +63,25 @@ export const List = UU5.Common.VisualComponent.create({
   _cancelForm() {
     this._modal.close();
   },
+
+  _renderRow(name) {
+    return (
+      <UU5.Bricks.Well bgStyle={"underline"}>
+        <UU5.Bricks.Container noSpacing={true}>
+          <UU5.Bricks.Row>
+            <UU5.Bricks.Column width="80%">
+              {name}
+            </UU5.Bricks.Column>
+            <UU5.Bricks.Column width="20%">
+              <UU5.Bricks.Button>
+                <UU5.Bricks.Icon icon={"mdi-pencil"} />
+              </UU5.Bricks.Button>
+            </UU5.Bricks.Column>
+          </UU5.Bricks.Row>
+        </UU5.Bricks.Container>
+      </UU5.Bricks.Well>
+    );
+  },
   //@@viewOff:private
 
   //@@viewOn:render
@@ -87,11 +106,7 @@ export const List = UU5.Common.VisualComponent.create({
                   {data && data.map(
                     ({ id, name }) => (
                       <div onClick={() => this.props.onClick({list: id})} key={Math.random()}>
-                        <UU5.Bricks.Well bgStyle={"underline"}>
-                          <UU5.Bricks.P>
-                            {name}
-                          </UU5.Bricks.P>
-                        </UU5.Bricks.Well>
+                        {this._renderRow(name)}
                       </div>
                     )
                   )

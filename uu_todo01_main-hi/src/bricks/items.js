@@ -2,6 +2,7 @@
 import * as UU5 from "uu5g04";
 import "uu5g04-bricks";
 import Config from "./config/config.js";
+import Lsi from "../bricks/items-lsi";
 import Calls from "../calls";
 //@@viewOff:imports
 
@@ -15,7 +16,8 @@ export const Items = UU5.Common.VisualComponent.create({
     tagName: Config.TAG + "Items",
     classNames: {
       main: (props, state) => Config.Css.css``
-    }
+    },
+    lsi: { ...Lsi }
   },
   //@@viewOff:statics
 
@@ -57,10 +59,20 @@ export const Items = UU5.Common.VisualComponent.create({
       >
         {( {data, errorState} ) => {
           if (data == null) {
-            return "Missing data";
+            return (
+              <UU5.Bricks.Alert
+                content={this.getLsiComponent("selectList")}
+                offsetTop={50}
+                block={true} />
+            );
           }
           else if (errorState) {
-            return "Error";
+            return (
+              <UU5.Bricks.Alert
+                content={this.getLsiComponent("errorState")}
+                offsetTop={50}
+                block={true} />
+            );
           } else if (data) {
             return (
               <>
