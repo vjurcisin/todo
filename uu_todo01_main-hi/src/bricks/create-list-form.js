@@ -2,7 +2,6 @@
 import * as UU5 from "uu5g04";
 import "uu5g04-bricks";
 import Config from "./config/config.js";
-import Calls from "../calls";
 //@@viewOff:imports
 
 export const CreateListForm = UU5.Common.VisualComponent.create({
@@ -20,17 +19,27 @@ export const CreateListForm = UU5.Common.VisualComponent.create({
   //@@viewOff:statics
 
   //@@viewOn:propTypes
+  propTypes: {
+    onSave: UU5.PropTypes.func,
+    onCancel: UU5.PropTypes.func
+  },
   //@@viewOff:propTypes
 
   //@@viewOn:getDefaultProps
   getDefaultProps() {
     return {
-      dataList: null
-    }
+      onSave: () => {},
+      onCancel: undefined
+    };
   },
   //@@viewOff:getDefaultProps
 
   //@@viewOn:reactLifeCycle
+  getInitialState() {
+    return {
+      formRef: null
+    };
+  },
   //@@viewOff:reactLifeCycle
 
   //@@viewOn:interface
@@ -40,60 +49,39 @@ export const CreateListForm = UU5.Common.VisualComponent.create({
   //@@viewOff:overriding
 
   //@@viewOn:private
-  _createList(dtoIn) {
-    return Calls.createList(dtoIn);
+  _registerForm(form) {
+    this.setState({
+      formRef: form
+    });
   },
 
-  _getHeader() {
-    return (
-      <UU5.Forms.ContextHeader
-        content={<UU5.Bricks.Lsi lsi={{ en: "Create a new list", cs: "Vytvorit novy list" }} />}
-      />
-    )
+  _saveForm(opt) {
+    // save values to DB
+    this.props.onSave(opt.values);
   },
 
-  _getForm(modal) {
+  _renderForm() {
     return (
-      <UU5.Forms.ContextForm
-        onSave={opt => {
-          this._createList(opt.values)
-          this.props.dataList.reload();
-          modal && modal.close();
-        }}
-        onCancel={() => {
-          modal && modal.close();
-        }}
-      >
-        <UU5.Forms.Text name="name" label={<UU5.Bricks.Lsi lsi={{ en: "Name", cs: "Nazov" }} />} required />
-      </UU5.Forms.ContextForm>
-    )
-  },
-
-  _getControls() {
-    return (
-      <UU5.Forms.ContextControls
-        buttonSubmitProps={{ content: <UU5.Bricks.Lsi lsi={{ en: "Create", cs: "Vytvorit" }} /> }}
-        buttonCancelProps={{ content: <UU5.Bricks.Lsi lsi={{ en: "Cancel", cs: "Zavriet" }} /> }}
-      />
-    )
+      <UU5.Forms.Text name="name" label={<UU5.Bricks.Lsi lsi={{ en: "Name", cs: "Nazov" }} />} required />
+    );
   },
   //@@viewOff:private
 
   //@@viewOn:render
   render() {
     return (
-      <UU5.Bricks.Div {...this.getMainPropsToPass()}>
-        <UU5.Forms.ContextModal ref_={modal => this._modal = modal} />
-
-        <UU5.Bricks.Link
-          content={<UU5.Bricks.Lsi lsi={{ en: "+ Create list", cs: "+ Vytvorit list" }} />}
-          onClick={() => this._modal.open({
-            header: this._getHeader(),
-            content: this._getForm(this._modal),
-            footer: this._getControls()
-          })}
-        />
-      </UU5.Bricks.Div>);
+      <>
+        <UU5.Forms.ContextForm
+          ref_={this._registerForm}
+          onSave={this._saveForm}
+          onCancel={this.props.onCancel}
+          labelColWidth="xs-12 m-5"
+          inputColWidth="xs-12 m-7"
+        >
+          {this.state.formRef && this._renderForm()}
+        </UU5.Forms.ContextForm>
+      </>
+    );
   }
   //@@viewOff:render
 });

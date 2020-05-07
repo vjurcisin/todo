@@ -3,6 +3,8 @@ import * as UU5 from "uu5g04";
 import "uu5g04-bricks";
 import Config from "./config/config.js";
 import Calls from "../calls";
+import Lsi from "../bricks/list-lsi"
+import CreateLsi from "../bricks/create-list-lsi.js";
 import CreateListForm from "./create-list-form";
 //@@viewOff:imports
 
@@ -16,7 +18,8 @@ export const List = UU5.Common.VisualComponent.create({
     tagName: Config.TAG + "List",
     classNames: {
       main: (props, state) => Config.Css.css``
-    }
+    },
+    lsi: { ...CreateLsi, ...Lsi }
   },
   //@@viewOff:statics
 
@@ -44,6 +47,22 @@ export const List = UU5.Common.VisualComponent.create({
   _loadList() {
     return Calls.listList();
   },
+
+  _createList(dtoIn) {
+    return Calls.createList(dtoIn);
+  },
+
+  _registerModal(modal) {
+    this._modal = modal;
+  },
+
+  _openModal() {
+    this._modal.open();
+  },
+
+  _cancelForm() {
+    this._modal.close();
+  },
   //@@viewOff:private
 
   //@@viewOn:render
@@ -52,17 +71,22 @@ export const List = UU5.Common.VisualComponent.create({
       <>
         <UU5.Common.ListDataManager
           onLoad={this._loadList}
-          ref_={(me) => {this._listDataManager = me}}
+          onCreate={this._createList}
         >
-          {({ data, errorState }) => {
-            if (errorState) {
-              return "Error";
-            } else if (data) {
+          {({ data, handleCreate }) => {
               return (
                 <>
-                  {data.map(
+                  <UU5.Forms.ContextModal
+                    ref_={this._registerModal}
+                    header={this.getLsiComponent("formHeader")}
+                    footer={<UU5.Forms.ContextControls />}
+                  >
+                    <CreateListForm onSave={values => handleCreate(values)} onCancel={this._cancelForm} />
+                  </UU5.Forms.ContextModal>
+
+                  {data && data.map(
                     ({ id, name }) => (
-                      <div onClick={() => this.props.onClick({list: id})} key={id}>
+                      <div onClick={() => this.props.onClick({list: id})} key={Math.random()}>
                         <UU5.Bricks.Well bgStyle={"underline"}>
                           <UU5.Bricks.P>
                             {name}
@@ -72,18 +96,15 @@ export const List = UU5.Common.VisualComponent.create({
                     )
                   )
                   }
+                  <UU5.Bricks.Well bgStyle={"transparent"}>
+                    <UU5.Bricks.Link onClick={this._openModal}>
+                      <UU5.Bricks.Lsi lsi={{ en: "+ Create list", cs: "+ Vytvorit list" }} />
+                    </UU5.Bricks.Link>
+                  </UU5.Bricks.Well>
                 </>
               );
-            } else {
-              return <UU5.Bricks.Loading />
-            }
           }}
         </UU5.Common.ListDataManager>
-
-        <UU5.Bricks.Well bgStyle={"transparent"}>
-          {console.log("bricks list " + this._listDataManager)}
-          <CreateListForm dataList={this._listDataManager} />
-        </UU5.Bricks.Well>
       </>
     );
   }
