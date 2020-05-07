@@ -6,6 +6,7 @@ import Calls from "../calls";
 import Lsi from "../bricks/list-lsi";
 import CreateLsi from "../bricks/create-list-lsi.js";
 import CreateListForm from "./create-list-form";
+import ListRow from "./list-row";
 //@@viewOff:imports
 
 export const List = UU5.Common.VisualComponent.create({
@@ -35,6 +36,11 @@ export const List = UU5.Common.VisualComponent.create({
   //@@viewOff:getDefaultProps
 
   //@@viewOn:reactLifeCycle
+  getInitialState() {
+    return {
+      selectedList: null
+    };
+  },
   //@@viewOff:reactLifeCycle
 
   //@@viewOn:interface
@@ -63,25 +69,6 @@ export const List = UU5.Common.VisualComponent.create({
   _cancelForm() {
     this._modal.close();
   },
-
-  _renderRow(name) {
-    return (
-      <UU5.Bricks.Well bgStyle={"underline"}>
-        <UU5.Bricks.Container noSpacing={true}>
-          <UU5.Bricks.Row>
-            <UU5.Bricks.Column width="80%">
-              {name}
-            </UU5.Bricks.Column>
-            <UU5.Bricks.Column width="20%">
-              <UU5.Bricks.Button>
-                <UU5.Bricks.Icon icon={"mdi-pencil"} />
-              </UU5.Bricks.Button>
-            </UU5.Bricks.Column>
-          </UU5.Bricks.Row>
-        </UU5.Bricks.Container>
-      </UU5.Bricks.Well>
-    );
-  },
   //@@viewOff:private
 
   //@@viewOn:render
@@ -105,21 +92,18 @@ export const List = UU5.Common.VisualComponent.create({
 
                   {data && data.map(
                     ({ id, name }) => (
-                      <div onClick={() => this.props.onClick({list: id})} key={Math.random()}>
-                        {this._renderRow(name)}
-                      </div>
+                      <ListRow value={name} key={Math.random()} idValue={id} onClick={() => this.props.onClick({list: id})} />
                     )
-                  )
-                  }
-                  <UU5.Bricks.Well bgStyle={"transparent"}>
-                    <UU5.Bricks.Link onClick={this._openModal}>
-                      <UU5.Bricks.Lsi lsi={{ en: "+ Create list", cs: "+ Vytvorit list" }} />
-                    </UU5.Bricks.Link>
-                  </UU5.Bricks.Well>
+                  )}
                 </>
               );
           }}
         </UU5.Common.ListDataManager>
+        <UU5.Bricks.Well bgStyle={"transparent"}>
+          <UU5.Bricks.Link onClick={this._openModal}>
+            <UU5.Bricks.Lsi lsi={{ en: "+ Create list", cs: "+ Vytvorit list" }} />
+          </UU5.Bricks.Link>
+        </UU5.Bricks.Well>
       </>
     );
   }
