@@ -23,6 +23,10 @@ export const Items = UU5.Common.VisualComponent.create({
   //@@viewOff:statics
 
   //@@viewOn:propTypes
+  propTypes: {
+    textInputRef: UU5.PropTypes.object,
+    listDataManagerRef: UU5.PropTypes.object,
+  },
   //@@viewOff:propTypes
 
   //@@viewOn:getDefaultProps
@@ -37,11 +41,12 @@ export const Items = UU5.Common.VisualComponent.create({
   getInitialState() {
     return {
       textInputRef: null,
+      listDataManagerRef: null
     };
   },
 
   componentDidUpdate() {
-    this._listDataManager.reload();
+    this.state.listDataManagerRef.reload();
   },
   //@@viewOff:reactLifeCycle
 
@@ -53,21 +58,27 @@ export const Items = UU5.Common.VisualComponent.create({
 
   //@@viewOn:private
   _loadItems() {
-    return Calls.listItem(this.props.list);
+    return Calls.listItem({list: this.props.list} );
   },
 
-  _createItem(dtoIn) {
-    if (dtoIn.text.trim() === "") {
+  async _createItem(dtoIn) {
+    if (dtoIn.text === "") {
       alert("Missing text");
     } else {
-      Calls.createItem(dtoIn);
-      this.componentDidUpdate();
+      await Calls.createItem(dtoIn);
+      this.state.listDataManagerRef.reload();
     }
   },
 
-  _registerTextInput(textInput) {
+  _registerTextInput(ref) {
     this.setState({
-      textInputRef: textInput
+      textInputRef: ref
+    });
+  },
+
+  _registerListDataManager(ref) {
+    this.setState({
+      listDataManagerRef: ref
     });
   },
 
@@ -84,7 +95,7 @@ export const Items = UU5.Common.VisualComponent.create({
                 />
             </UU5.Bricks.Column>
             <UU5.Bricks.Column colWidth={"m-1 l-1 xl-1"} className="uu5-common-right">
-                <UU5.Bricks.Button onClick={() => this._createItem({list: this.props.list.list, text: this.state.textInputRef.getValue()})}>
+                <UU5.Bricks.Button onClick={() => this._createItem({list: this.props.list, text: this.state.textInputRef.getValue()})}>
                   <UU5.Bricks.Icon icon={"uu5-ok"} />
                 </UU5.Bricks.Button>
             </UU5.Bricks.Column>
@@ -100,7 +111,7 @@ export const Items = UU5.Common.VisualComponent.create({
       <div style={{padding: "10px 10px 10px 10px", backgroundColor: "#2196F3"}}>
         <UU5.Common.ListDataManager
           onReload={this._loadItems}
-          ref_={(me) => {this._listDataManager = me}}
+          ref_={this._registerListDataManager}
         >
           {( {data, errorState} ) => {
             if (data == null) {

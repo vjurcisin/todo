@@ -87,7 +87,7 @@ export const List = UU5.Common.VisualComponent.create({
 
                   {data && data.map(
                     ({ id, name }) => (
-                      <div onClick={() => this.props.listChanged({list: id})} key={Math.random()}>
+                      <div onClick={() => this.props.listChanged(id)} key={Math.random()}>
                         <ListRow value={name} idValue={id} />
                       </div>
                     )
