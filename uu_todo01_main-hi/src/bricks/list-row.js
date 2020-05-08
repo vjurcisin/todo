@@ -20,26 +20,21 @@ export const ListRow = UU5.Common.VisualComponent.create({
 
   //@@viewOn:propTypes
   propTypes: {
-    value: UU5.PropTypes.string,
-    active: UU5.PropTypes.func,
+    value: UU5.PropTypes.string
   },
   //@@viewOff:propTypes
 
   //@@viewOn:getDefaultProps
   getDefaultProps() {
     return {
-      value: null,
-      active: () => {},
-      idValue: null
+      value: null
     }
   },
   //@@viewOff:getDefaultProps
 
   //@@viewOn:reactLifeCycle
   getInitialState() {
-    return {
-      active: false
-    };
+    return { active: false }
   },
   //@@viewOff:reactLifeCycle
 
@@ -51,9 +46,7 @@ export const ListRow = UU5.Common.VisualComponent.create({
 
   //@@viewOn:private
   _handleOnClick() {
-    this.props.onClick({list: this.props.idValue});
-    this.setState({active: true}, () => {console.log(this.state)});
-    // this.props.onClick();
+    this.setState({ active: true }, () => {console.log("test")});
   },
   //@@viewOff:private
 

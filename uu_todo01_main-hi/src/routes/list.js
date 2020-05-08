@@ -39,10 +39,8 @@ export const List = UU5.Common.VisualComponent.create({
   //@@viewOff:reactLifeCycle
 
   //@@viewOn:interface
-  setList(list) {
-    this.setState({
-      list: list
-    });
+  setListChanged(list) {
+    this.setState({ list: list });
   },
   //@@viewOff:interface
 
@@ -59,7 +57,7 @@ export const List = UU5.Common.VisualComponent.create({
       <UU5.Bricks.Row noSpacing={true} display={"flex"}>
         <UU5.Bricks.Column noSpacing={true} colWidth={"xs-12 s-4 m-3 l-2"} style={{borderRight: "1px solid rgb(189, 189, 189)"}}>
           <UU5.Bricks.Well elevation={1}>{this.getLsiComponent("lists")}</UU5.Bricks.Well>
-          <Lists onClick={this.setList} />
+          <Lists listChanged={this.setListChanged} />
         </UU5.Bricks.Column>
         <UU5.Bricks.Column noSpacing={false} colWidth={"xs-12 s-8 m-9 l-10"}>
           <Items list={this.state.list} />

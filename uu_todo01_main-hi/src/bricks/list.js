@@ -30,17 +30,12 @@ export const List = UU5.Common.VisualComponent.create({
   //@@viewOn:getDefaultProps
   getDefaultProps() {
     return {
-      onClick: () => {}
+      listChanged: () => {}
     }
   },
   //@@viewOff:getDefaultProps
 
   //@@viewOn:reactLifeCycle
-  getInitialState() {
-    return {
-      selectedList: null
-    };
-  },
   //@@viewOff:reactLifeCycle
 
   //@@viewOn:interface
@@ -92,7 +87,9 @@ export const List = UU5.Common.VisualComponent.create({
 
                   {data && data.map(
                     ({ id, name }) => (
-                      <ListRow value={name} key={Math.random()} idValue={id} onClick={() => this.props.onClick({list: id})} />
+                      <div onClick={() => this.props.listChanged({list: id})} key={Math.random()}>
+                        <ListRow value={name} idValue={id} />
+                      </div>
                     )
                   )}
                 </>
