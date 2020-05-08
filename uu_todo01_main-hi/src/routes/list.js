@@ -5,7 +5,6 @@ import Config from "./config/config.js";
 import Lsi from "../bricks/list-lsi";
 import Items from "../bricks/items";
 import Lists from "../bricks/list"
-import CreateLsi from "../bricks/create-list-lsi";
 //@@viewOff:imports
 
 export const List = UU5.Common.VisualComponent.create({
