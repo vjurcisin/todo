@@ -46,14 +46,14 @@ export const ListRow = UU5.Common.VisualComponent.create({
 
   //@@viewOn:private
   _handleOnClick() {
-    this.setState({ active: true }, () => {console.log("test")});
+    this.setState({ active: true });
   },
   //@@viewOff:private
 
   //@@viewOn:render
   render() {
     return (
-      <UU5.Bricks.Div {...this.getMainPropsToPass()} mainAttrs={{ onClick: this._handleOnClick }}>
+      <UU5.Bricks.Div {...this.getMainPropsToPass()} onClick={this._handleOnClick} mainAttrs={{ onClick: this._handleOnClick }}>
           <UU5.Bricks.Well bgStyle={"underline"}>
             <UU5.Bricks.Container noSpacing={true}>
               <UU5.Bricks.Row>

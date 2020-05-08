@@ -56,8 +56,11 @@ export const ItemRow = UU5.Common.VisualComponent.create({
         <UU5.Bricks.Well bgStyle={"filled"} borderRadius={"5px"} style={{marginBottom: "10px", padding: "10px"}}>
           <UU5.Bricks.Container noSpacing={true}>
             <UU5.Bricks.Row noSpacing={true}>
-              <UU5.Bricks.Column colWidth={"m-11 l-11 xl-11"} noSpacing={true}>
-                {this.props.value}
+              <UU5.Bricks.Column colWidth={"m-1 l-1 xl-1"} noSpacing={true} className="uu5-common-left">
+                <UU5.Forms.Checkbox labelPosition={"left"} style={{margin: "0px"}} />
+              </UU5.Bricks.Column>
+              <UU5.Bricks.Column colWidth={"m-10 l-10 xl-10"} noSpacing={true}>
+                <UU5.Bricks.Text style={{marginTop: "0.2em"}}>{this.props.value}</UU5.Bricks.Text>
               </UU5.Bricks.Column>
               <UU5.Bricks.Column colWidth={"m-1 l-1 xl-1"} className="uu5-common-right">
                 <UU5.Bricks.Button>

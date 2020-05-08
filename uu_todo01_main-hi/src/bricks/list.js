@@ -25,6 +25,9 @@ export const List = UU5.Common.VisualComponent.create({
   //@@viewOff:statics
 
   //@@viewOn:propTypes
+  propTypes: {
+    listChanged: UU5.PropTypes.func,
+  },
   //@@viewOff:propTypes
 
   //@@viewOn:getDefaultProps
@@ -36,6 +39,15 @@ export const List = UU5.Common.VisualComponent.create({
   //@@viewOff:getDefaultProps
 
   //@@viewOn:reactLifeCycle
+  getInitialState() {
+    return {
+      listDataManagerRef: null
+    };
+  },
+
+  componentDidUpdate() {
+    this.state.listDataManagerRef.reload();
+  },
   //@@viewOff:reactLifeCycle
 
   //@@viewOn:interface
@@ -49,8 +61,16 @@ export const List = UU5.Common.VisualComponent.create({
     return Calls.listList();
   },
 
-  _createList(dtoIn) {
-    return Calls.createList(dtoIn);
+  async _createList(dtoIn) {
+    await Calls.createList(dtoIn);
+    this._modal.close();
+    this.state.listDataManagerRef.reload();
+  },
+
+  _registerListDataManager(ref) {
+    this.setState({
+      listDataManagerRef: ref
+    });
   },
 
   _registerModal(modal) {
@@ -72,19 +92,11 @@ export const List = UU5.Common.VisualComponent.create({
       <>
         <UU5.Common.ListDataManager
           onLoad={this._loadList}
-          onCreate={this._createList}
+          ref_={this._registerListDataManager}
         >
-          {({ data, handleCreate }) => {
+          {({ data }) => {
               return (
                 <>
-                  <UU5.Forms.ContextModal
-                    ref_={this._registerModal}
-                    header={this.getLsiComponent("formHeader")}
-                    footer={<UU5.Forms.ContextControls />}
-                  >
-                    <CreateListForm onSave={values => handleCreate(values)} onCancel={this._cancelForm} />
-                  </UU5.Forms.ContextModal>
-
                   {data && data.map(
                     ({ id, name }) => (
                       <div onClick={() => this.props.listChanged(id)} key={Math.random()}>
@@ -96,6 +108,13 @@ export const List = UU5.Common.VisualComponent.create({
               );
           }}
         </UU5.Common.ListDataManager>
+        <UU5.Forms.ContextModal
+          ref_={this._registerModal}
+          header={this.getLsiComponent("formHeader")}
+          footer={<UU5.Forms.ContextControls />}
+        >
+          <CreateListForm onSave={values => this._createList(values)} onCancel={this._cancelForm} />
+        </UU5.Forms.ContextModal>
         <UU5.Bricks.Well bgStyle={"transparent"}>
           <UU5.Bricks.Link onClick={this._openModal}>
             <UU5.Bricks.Lsi lsi={{ en: "+ Create list", cs: "+ Vytvorit list" }} />
