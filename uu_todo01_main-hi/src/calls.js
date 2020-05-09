@@ -96,6 +96,14 @@ let Calls = {
 
   completeItem(dtoIn) {
     return Calls.asyncCall(dtoIn, "item/complete");
+  },
+
+  updateItem(dtoIn) {
+    return Calls.asyncCall(dtoIn, "item/update");
+  },
+
+  deleteItem(dtoIn) {
+    return Calls.asyncCall(dtoIn, "item/delete");
   }
 };
 
