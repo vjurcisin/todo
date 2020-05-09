@@ -72,6 +72,100 @@ export const ItemRow = UU5.Common.VisualComponent.create({
       this.props.parentReloadFunc()
     });
   },
+
+  _onClickItemRow(value) {
+    this.setState({
+      editable: value
+    });
+  },
+
+  _callUpdateItem() {
+    if (this._editItemText.getValue().trim() === "") {
+      this._editItemText.setError("Toto pole je povinné.")
+    } else {
+      Calls.updateItem({item: this.props.item, text: this._editItemText.getValue()})
+        .then(() => {
+          this.props.parentReloadFunc();
+        });
+    }
+  },
+
+  _callDeleteItem() {
+    Calls.deleteItem({id: this.props.item})
+      .then(() => {
+        this.props.parentReloadFunc()
+      });
+  },
+
+  _renderEditable() {
+    return (
+      <>
+        <UU5.Bricks.Column colWidth={"m-10 l-10 xl-10"} noSpacing={true}>
+          <UU5.Forms.Text
+            ref_={(me) => {this._editItemText = me}}
+            value={this.props.value}
+            style={{margin: "0"}}
+            onEnter={this._callUpdateItem}
+            required={true}
+          />
+        </UU5.Bricks.Column>
+        <UU5.Bricks.Column colWidth={"m-2 l-2 xl-2"} noSpacing={true} className="uu5-common-right">
+          <UU5.Bricks.ButtonGroup>
+            {/*Delete*/}
+            <UU5.Bricks.Button
+              style={{marginRight: "0.5em"}}
+              bgStyle={"transparent"}
+              onClick={this._callDeleteItem}
+            >
+              <UU5.Bricks.Icon icon={"mdi-delete"} />
+            </UU5.Bricks.Button>
+            <UU5.Bricks.Button
+              style={{marginRight: "0.5em"}}
+              onClick={() => {this._onClickItemRow(false)}}
+            >
+              <UU5.Bricks.Icon icon={"uu5-cross"} />
+            </UU5.Bricks.Button>
+            {/*OK*/}
+            <UU5.Bricks.Button
+              onClick={this._callUpdateItem}
+            >
+              <UU5.Bricks.Icon icon={"uu5-ok"} />
+            </UU5.Bricks.Button>
+          </UU5.Bricks.ButtonGroup>
+        </UU5.Bricks.Column>
+      </>
+    );
+  },
+
+  _renderReadonly() {
+    return (
+      <>
+        <UU5.Bricks.Column colWidth={"m-1 l-1 xl-1"} noSpacing={true} className="uu5-common-left">
+          <UU5.Forms.Checkbox
+            ref_={this._registerCheckbox}
+            value={this.props.completed}
+            disabled={this.props.completed}
+            controlled={false}
+            labelPosition={"left"}
+            style={{margin: "0px"}}
+            onChange={this._onChangeHandler}
+          />
+        </UU5.Bricks.Column>
+        <UU5.Bricks.Column colWidth={"m-10 l-10 xl-10"} noSpacing={true}>
+            <UU5.Bricks.Text disabled={this.props.completed} style={{marginTop: "0.2em", textDecoration: this.props.completed ? "line-through" : "none"}}>
+              {this.props.value}
+            </UU5.Bricks.Text>
+        </UU5.Bricks.Column>
+        <UU5.Bricks.Column colWidth={"m-1 l-1 xl-1"} className="uu5-common-right">
+          <UU5.Bricks.Button
+            onClick={() => {this._onClickItemRow(true)}}
+          >
+            <UU5.Bricks.Icon icon={"mdi-pencil"} />
+          </UU5.Bricks.Button>
+        </UU5.Bricks.Column>
+      </>
+    );
+  },
   //@@viewOff:private
 
   //@@viewOn:render
@@ -81,27 +175,7 @@ export const ItemRow = UU5.Common.VisualComponent.create({
         <UU5.Bricks.Well bgStyle={"filled"} borderRadius={"5px"} style={{marginBottom: "10px", padding: "10px"}}>
           <UU5.Bricks.Container noSpacing={true}>
             <UU5.Bricks.Row noSpacing={true}>
-              <UU5.Bricks.Column colWidth={"m-1 l-1 xl-1"} noSpacing={true} className="uu5-common-left">
-                <UU5.Forms.Checkbox
-                  ref_={this._registerCheckbox}
-                  value={this.props.completed}
-                  disabled={this.props.completed}
-                  controlled={false}
-                  labelPosition={"left"}
-                  style={{margin: "0px"}}
-                  onChange={this._onChangeHandler}
-                />
-              </UU5.Bricks.Column>
-              <UU5.Bricks.Column colWidth={"m-10 l-10 xl-10"} noSpacing={true}>
-                <UU5.Bricks.Text disabled={this.props.completed} style={{marginTop: "0.2em", textDecoration: this.props.completed ? "line-through" : "none"}}>
-                  {this.props.value}
-                </UU5.Bricks.Text>
-              </UU5.Bricks.Column>
-              <UU5.Bricks.Column colWidth={"m-1 l-1 xl-1"} className="uu5-common-right">
-                <UU5.Bricks.Button disabled={this.props.completed}>
-                  <UU5.Bricks.Icon icon={"mdi-pencil"} />
-                </UU5.Bricks.Button>
-              </UU5.Bricks.Column>
+              {this.state.editable ? this._renderEditable() : this._renderReadonly()}
             </UU5.Bricks.Row>
           </UU5.Bricks.Container>
         </UU5.Bricks.Well>
