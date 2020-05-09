@@ -92,6 +92,10 @@ let Calls = {
 
   createItem(dtoIn) {
     return Calls.asyncCall(dtoIn, "item/create");
+  },
+
+  completeItem(dtoIn) {
+    return Calls.asyncCall(dtoIn, "item/complete");
   }
 };
 

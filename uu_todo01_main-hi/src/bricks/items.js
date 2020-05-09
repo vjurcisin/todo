@@ -55,6 +55,10 @@ export const Items = UU5.Common.VisualComponent.create({
   //@@viewOff:reactLifeCycle
 
   //@@viewOn:interface
+  reloadListaManagers() {
+    this.state.unCompletelistDataManagerRef.reload();
+    this.state.completedListDataManagerRef.reload();
+  },
   //@@viewOff:interface
 
   //@@viewOn:overriding
@@ -69,12 +73,15 @@ export const Items = UU5.Common.VisualComponent.create({
     return Calls.listItem({list: this.props.list, completed: true} );
   },
 
-  async _createItem(dtoIn) {
+  _createItem(dtoIn) {
     if (dtoIn.text === "") {
       alert("Missing text");
     } else {
-      await Calls.createItem(dtoIn);
-      this.state.unCompletelistDataManagerRef.reload();
+      Calls.createItem(dtoIn).then((r) => {
+        this.state.unCompletelistDataManagerRef.reload();
+        this.state.textInputRef.reset();
+        this.state.textInputRef.focus();
+      });
     }
   },
 
@@ -106,6 +113,7 @@ export const Items = UU5.Common.VisualComponent.create({
                   name="name"
                   required={false}
                   placeholder={"Add a todo..."}
+                  onEnter={() => this._createItem({list: this.props.list, text: this.state.textInputRef.getValue()})}
                 />
             </UU5.Bricks.Column>
             <UU5.Bricks.Column colWidth={"m-1 l-1 xl-1"} className="uu5-common-right">
@@ -132,7 +140,13 @@ export const Items = UU5.Common.VisualComponent.create({
               <>
                 {data && data.map(
                   ({ id, text }) => (
-                    <ItemRow item={id} value={text} completed={completed} key={Math.random()} />
+                    <ItemRow
+                      item={id}
+                      value={text}
+                      completed={completed}
+                      key={Math.random()}
+                      parentReloadFunc={this.reloadListaManagers}
+                    />
                   )
                 )}
               </>
@@ -159,7 +173,7 @@ export const Items = UU5.Common.VisualComponent.create({
         <UU5.Bricks.Button
           onClick={this._toggleShowCompleted}
           style={{marginBottom: "2em", marginTop: "1em"}}>
-          {this.state.showCompleted ? "Show completed" : "Hide completed"}
+          {this.state.showCompleted ? this.getLsiComponent("showCompleted") : this.getLsiComponent("hideCompleted")}
         </UU5.Bricks.Button>
 
         <UU5.Bricks.Div hidden={this.state.showCompleted}>

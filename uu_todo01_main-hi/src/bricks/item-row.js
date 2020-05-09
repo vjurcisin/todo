@@ -2,6 +2,7 @@
 import * as UU5 from "uu5g04";
 import "uu5g04-bricks";
 import Config from "./config/config.js";
+import Calls from "../calls";
 //@@viewOff:imports
 
 export const ItemRow = UU5.Common.VisualComponent.create({
@@ -23,6 +24,7 @@ export const ItemRow = UU5.Common.VisualComponent.create({
     completed: UU5.PropTypes.bool,
     item: UU5.PropTypes.string,
     value: UU5.PropTypes.string,
+    parentReloadFunc: UU5.PropTypes.func
   },
   //@@viewOff:propTypes
 
@@ -31,14 +33,18 @@ export const ItemRow = UU5.Common.VisualComponent.create({
     return {
       completed: false,
       item: null,
-      value: null
+      value: null,
+      parentReloadFunc: undefined
     }
   },
   //@@viewOff:getDefaultProps
 
   //@@viewOn:reactLifeCycle
   getInitialState() {
-    return { editable: false }
+    return {
+      editable: false,
+      checkBoxRef: null
+    }
   },
   //@@viewOff:reactLifeCycle
 
@@ -49,6 +55,23 @@ export const ItemRow = UU5.Common.VisualComponent.create({
   //@@viewOff:overriding
 
   //@@viewOn:private
+  _callCompleteItem(completed) {
+    return Calls.completeItem({item: this.props.item, completed: completed});
+  },
+
+  _registerCheckbox(ref) {
+    this.setState({
+      checkBoxRef: ref
+    });
+  },
+
+  _onChangeHandler(opt) {
+    let completed = opt.value;
+    this.state.checkBoxRef.setValue(completed);
+    this._callCompleteItem(completed).then((r) => {
+      this.props.parentReloadFunc()
+    });
+  },
   //@@viewOff:private
 
   //@@viewOn:render
@@ -59,7 +82,15 @@ export const ItemRow = UU5.Common.VisualComponent.create({
           <UU5.Bricks.Container noSpacing={true}>
             <UU5.Bricks.Row noSpacing={true}>
               <UU5.Bricks.Column colWidth={"m-1 l-1 xl-1"} noSpacing={true} className="uu5-common-left">
-                <UU5.Forms.Checkbox disabled={this.props.completed} value={this.props.completed} labelPosition={"left"} style={{margin: "0px"}} />
+                <UU5.Forms.Checkbox
+                  ref_={this._registerCheckbox}
+                  value={this.props.completed}
+                  disabled={this.props.completed}
+                  controlled={false}
+                  labelPosition={"left"}
+                  style={{margin: "0px"}}
+                  onChange={this._onChangeHandler}
+                />
               </UU5.Bricks.Column>
               <UU5.Bricks.Column colWidth={"m-10 l-10 xl-10"} noSpacing={true}>
                 <UU5.Bricks.Text disabled={this.props.completed} style={{marginTop: "0.2em", textDecoration: this.props.completed ? "line-through" : "none"}}>
