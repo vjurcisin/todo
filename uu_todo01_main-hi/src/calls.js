@@ -84,6 +84,14 @@ let Calls = {
     return Calls.asyncCall(dtoIn, "list/create");
   },
 
+  updateList(dtoIn) {
+    return Calls.asyncCall(dtoIn, "list/update");
+  },
+
+  deleteList(dtoIn) {
+    return Calls.asyncCall(dtoIn, "list/delete");
+  },
+
   // Item calls
 
   listItem(dtoIn) {
