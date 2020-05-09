@@ -32,14 +32,15 @@ export const List = UU5.Common.VisualComponent.create({
   //@@viewOn:reactLifeCycle
   getInitialState() {
     return {
-      list: null
+      list: null,
+      itemsRef: null
     };
   },
   //@@viewOff:reactLifeCycle
 
   //@@viewOn:interface
   setListChanged(list) {
-    this.setState({ list: list });
+    this.state.itemsRef.setList(list);
   },
   //@@viewOff:interface
 
@@ -47,6 +48,13 @@ export const List = UU5.Common.VisualComponent.create({
   //@@viewOff:overriding
 
   //@@viewOn:private
+  _registerItems(ref) {
+    this.setState((prevState, props) => {
+      return {
+        itemsRef: ref
+      }
+    });
+  },
   //@@viewOff:private
 
   //@@viewOn:render
@@ -59,7 +67,10 @@ export const List = UU5.Common.VisualComponent.create({
           <Lists listChanged={this.setListChanged} />
         </UU5.Bricks.Column>
         <UU5.Bricks.Column noSpacing={false} colWidth={"xs-12 s-8 m-9 l-10"}>
-          <Items list={this.state.list} />
+          <Items
+            ref_={this._registerItems}
+            list={this.state.list}
+          />
         </UU5.Bricks.Column>
       </UU5.Bricks.Row>
     </UU5.Bricks.Container>);

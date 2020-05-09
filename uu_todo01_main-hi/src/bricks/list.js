@@ -51,6 +51,9 @@ export const List = UU5.Common.VisualComponent.create({
   //@@viewOff:reactLifeCycle
 
   //@@viewOn:interface
+  reloadListaManagers() {
+    this.state.listDataManagerRef.reload();
+  },
   //@@viewOff:interface
 
   //@@viewOn:overriding
@@ -84,6 +87,10 @@ export const List = UU5.Common.VisualComponent.create({
   _cancelForm() {
     this._modal.close();
   },
+
+  _handleOnClickListChanged(id) {
+    this.props.listChanged(id)
+  },
   //@@viewOff:private
 
   //@@viewOn:render
@@ -99,8 +106,12 @@ export const List = UU5.Common.VisualComponent.create({
                 <>
                   {data && data.map(
                     ({ id, name }) => (
-                      <div onClick={() => this.props.listChanged(id)} key={Math.random()}>
-                        <ListRow value={name} idValue={id} />
+                      <div onClick={() => this._handleOnClickListChanged(id)} key={Math.random()}>
+                        <ListRow
+                          list={id}
+                          value={name}
+                          parentReloadFunc={this.reloadListaManagers}
+                        />
                       </div>
                     )
                   )}

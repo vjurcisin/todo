@@ -31,16 +31,12 @@ export const Items = UU5.Common.VisualComponent.create({
   //@@viewOff:propTypes
 
   //@@viewOn:getDefaultProps
-  getDefaultProps() {
-    return {
-      list: null
-    }
-  },
   //@@viewOff:getDefaultProps
 
   //@@viewOn:reactLifeCycle
   getInitialState() {
     return {
+      list: null,
       textInputRef: null,
       unCompletelistDataManagerRef: null,
       completedListDataManagerRef: null,
@@ -59,6 +55,14 @@ export const Items = UU5.Common.VisualComponent.create({
     this.state.unCompletelistDataManagerRef.reload();
     this.state.completedListDataManagerRef.reload();
   },
+
+  setList(list) {
+    this.setState((prevState, props) => {
+      return {
+        list: list
+      }
+    });
+  },
   //@@viewOff:interface
 
   //@@viewOn:overriding
@@ -66,17 +70,15 @@ export const Items = UU5.Common.VisualComponent.create({
 
   //@@viewOn:private
   _loadUncompletedItems() {
-    return Calls.listItem({list: this.props.list, completed: false} );
+    return Calls.listItem({list: this.state.list, completed: false} );
   },
 
   _loadCompletedItems() {
-    return Calls.listItem({list: this.props.list, completed: true} );
+    return Calls.listItem({list: this.state.list, completed: true} );
   },
 
   _createItem(dtoIn) {
-    if (dtoIn.text === "") {
-      alert("Missing text");
-    } else {
+    if (dtoIn.text.trim() !== "") {
       Calls.createItem(dtoIn).then((r) => {
         this.state.unCompletelistDataManagerRef.reload();
         this.state.textInputRef.reset();
@@ -113,12 +115,12 @@ export const Items = UU5.Common.VisualComponent.create({
                   name="name"
                   required={false}
                   placeholder={"Add a todo..."}
-                  onEnter={() => this._createItem({list: this.props.list, text: this.state.textInputRef.getValue()})}
+                  onEnter={() => this._createItem({list: this.state.list, text: this.state.textInputRef.getValue()})}
                 />
             </UU5.Bricks.Column>
             <UU5.Bricks.Column colWidth={"m-1 l-1 xl-1"} className="uu5-common-right">
                 <UU5.Bricks.Button
-                  onClick={() => this._createItem({list: this.props.list, text: this.state.textInputRef.getValue()})}
+                  onClick={() => this._createItem({list: this.state.list, text: this.state.textInputRef.getValue()})}
                   style={{marginTop: "1.7em"}}
                 >
                   <UU5.Bricks.Icon icon={"uu5-ok"} />
