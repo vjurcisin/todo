@@ -91,15 +91,27 @@ export const ListRow = UU5.Common.VisualComponent.create({
     } else {
       Calls.updateList({list: this.props.list, name: this._editItemText.getValue()})
         .then(() => {
+          this.setState({
+            editable: false
+          })
           this.props.parentReloadFunc();
         });
     }
   },
 
-  _callDeleteList() {
-    this.setState({
-      editable: false
-    })
+  _callDeleteList(dtoIn) {
+    return Calls.deleteList(dtoIn);
+  },
+
+  _confirmDeleteList() {
+    this._callDeleteList({id: this.props.list, forceDelete: true})
+      .then(() => {
+        this.setState({
+          editable: false
+        })
+        this.props.parentReloadFunc();
+        console.log(this.state);
+      });
   },
 
   _renderEditable() {
@@ -120,7 +132,7 @@ export const ListRow = UU5.Common.VisualComponent.create({
             <UU5.Bricks.Button
               style={{marginRight: "0.5em"}}
               bgStyle={"transparent"}
-              onClick={this._callDeleteList}
+              onClick={()=> this._deleteListModelRef.open()}
             >
               <UU5.Bricks.Icon icon={"mdi-delete"} />
             </UU5.Bricks.Button>
@@ -140,10 +152,25 @@ export const ListRow = UU5.Common.VisualComponent.create({
   //@@viewOn:render
   render() {
     return (
-      <UU5.Bricks.Div {...this.getMainPropsToPass()}
-                      mainAttrs={{ onClick: this._handleOnClick }}
-                      style={{ backgroundColor: this.state.active ? "#90CAF9" : ""}}
-      >
+      <>
+        <UU5.Bricks.ConfirmModal
+          ref_={r => this._deleteListModelRef = r}
+          onRefuse={() => {
+            this.setState({
+              editable: false
+            })
+          }}
+          onConfirm={() => this._confirmDeleteList()}
+          size={"m"}
+          confirmButtonProps={{content: "Delete", colorSchema: "red"}}
+          refuseButtonProps={{content: "Cancel"}}
+          header={<UU5.Bricks.Text>Do you really want to delete {this.props.value}</UU5.Bricks.Text>}
+          content={<UU5.Bricks.P>All items in the list will also be deleted.</UU5.Bricks.P>}
+        />
+        <UU5.Bricks.Div {...this.getMainPropsToPass()}
+                        mainAttrs={{ onClick: this._handleOnClick }}
+                        style={{ backgroundColor: this.state.active ? "#90CAF9" : ""}}
+        >
           <UU5.Bricks.Well bgStyle={"underline"}>
             <UU5.Bricks.Container noSpacing={true}>
               <UU5.Bricks.Row>
@@ -151,7 +178,8 @@ export const ListRow = UU5.Common.VisualComponent.create({
               </UU5.Bricks.Row>
             </UU5.Bricks.Container>
           </UU5.Bricks.Well>
-      </UU5.Bricks.Div>
+        </UU5.Bricks.Div>
+      </>
     );
   }
   //@@viewOff:render
